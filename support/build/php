@@ -9,7 +9,7 @@ source $(dirname $BASH_SOURCE)/_util/include/manifest.sh
 
 set -x
 
-echo XXX $STACK
+echo XXX1 $STACK
 
 OUT_PREFIX=$1
 
