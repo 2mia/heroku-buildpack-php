@@ -26,6 +26,8 @@ source $bp_dir/bin/util/common.sh
 # we do not 'set -o errtrace', because that would cause subshell failures to fire the trap twice, e.g. with someval=$(func_that_fails)
 trap 'err_trap' ERR
 
+set -x
+
 # stdlib
 # download to a file first, as the function restarts the entire download on code 18 connection reset (not all servers support -C)
 curl_retry_on_18 --fail --silent --location -o $bp_dir/bin/util/stdlib.sh https://lang-common.s3.amazonaws.com/buildpack-stdlib/v8/stdlib.sh || {
@@ -490,6 +492,9 @@ elif composer show -d "$build_dir/.heroku/php" --installed --quiet heroku-sys/hh
 	engine="hhvm"
 	engine_r="hhvm --php -r"
 fi
+
+echo XXX
+cat $build_dir/.heroku/php/install.log
 
 # log number of installed platform packages
 mmeasure "platform.count" $(composer show -d "$build_dir/.heroku/php" --installed "heroku-sys/*" 2> /dev/null | wc -l)
